@@ -4,11 +4,11 @@ Uses Dribbble API to retrieve images of projects. Displays them. Alows user to f
 
 ##Todo
 
-- Set up build system
-  - SCSS
-  - Babel (ES6 here I come!)
-  - Browsersync
-  - Concatenation (CSS and JS)
+- Set up build system [x]
+  - SCSS [x]
+  - Babel (ES6 here I come!) [x]
+  - Browsersync [x]
+  - Concatenation (CSS and JS) [x]
 - Hit the API at `https://api.dribbble.com/v1/shots`
 - Lazy-load images
 - Use responsive image solution (load 2x images only when needed)

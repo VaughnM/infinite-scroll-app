@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":[],"mappings":";;AAAC,aAAU;AAAE,UAAQ,GAAR,CAAY,0BAAZ;AAA0C,CAAtD,GAAD","file":"scripts.js","sourcesContent":["(function(){ console.log('I can use es6 magic now!'); } ());"],"sourceRoot":"/source/"}
