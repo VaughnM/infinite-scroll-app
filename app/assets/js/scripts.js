@@ -56,6 +56,7 @@ var infApp = infApp || {};
 
     request.onload = function() {
       var html = [];
+      var htmlString;
 
       if (request.status >= 200 && request.status < 400) {
         infApp.shots = JSON.parse(request.responseText);
@@ -66,7 +67,9 @@ var infApp = infApp || {};
           html.push(infApp.prepTemplate(item));
         });
 
-        document.getElementById('shots-container').innerHTML += html;
+        htmlString = html.join('');
+
+        document.getElementById('shots-container').innerHTML += htmlString;
 
         infApp.pageCount = (infApp.pageCount += 1) || 1;
 
@@ -79,6 +82,7 @@ var infApp = infApp || {};
 
     request.onerror = function() {
       // There was a connection error of some sort
+      console.error("Something went wrong with API request");
     };
 
     request.send();
@@ -93,10 +97,8 @@ var infApp = infApp || {};
 (function() {
   if (document.readyState != 'loading'){
     infApp.getShots();
-    // console.log(infApp.shots);
   } else {
     document.addEventListener('DOMContentLoaded', infApp.getShots());
-    // console.info(infApp.shots);
   }
 }());
 

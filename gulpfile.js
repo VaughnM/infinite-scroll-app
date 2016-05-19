@@ -29,7 +29,9 @@ gulp.task('serve', ['sass','js'], function() {
 // Compile sass into CSS
 gulp.task('sass', function() {
     return gulp.src(src.scss)
-        .pipe(sass())
+        .pipe(sourcemaps.init())
+        .pipe(sass().on('error', sass.logError))
+        .pipe(concat('style.css'))
         .pipe(gulp.dest(src.css))
         .pipe(reload({stream: true}));
 });
