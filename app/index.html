@@ -3,10 +3,16 @@
 <head>
   <title>Infinite Scroll App</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/scripts.js"></script>
 </head>
 <body>
   <h1>Hello Infinity</h1>
 
-  <script src="assets/js/scripts.js"></script>
+  <div id="shots-container">
+    
+  </div>
+
+  <button onclick="infApp.getShots({page:infApp.pageCount + 1})">Get More shots</button>
+
 </body>
 </html>

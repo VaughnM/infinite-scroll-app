@@ -38,9 +38,9 @@ gulp.task('sass', function() {
 gulp.task('js', function() {
     return gulp.src(src.es6)
         .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets: ['es2015']
-        }))
+        // .pipe(babel({
+        //     presets: ['es2015']
+        // }))
         .pipe(concat('scripts.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(src.js))

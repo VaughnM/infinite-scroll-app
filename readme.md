@@ -17,3 +17,7 @@ Uses Dribbble API to retrieve images of projects. Displays them. Alows user to f
   - 3 breakpoints
 - Ability to favourite shot (saves shot id to local storage)
 - Enforce Airbnb or Github code style
+
+##Goals
+
+I want this app to act as a module that can be added to any webapp easily.
