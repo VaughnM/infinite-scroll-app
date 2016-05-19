@@ -1,3 +1,5 @@
+'use strict';
+
 var infApp = infApp || {};
 
 (function(){
@@ -10,6 +12,8 @@ infApp.settings = {
 };
 
 }());
+'use strict';
+
 var infApp = infApp || {};
 
 (function(){
@@ -30,6 +34,8 @@ var infApp = infApp || {};
   infApp.prepTemplate = prepTemplate;
 
 }());
+'use strict';
+
 var infApp = infApp || {};
 
 (function(){
@@ -92,13 +98,53 @@ var infApp = infApp || {};
   infApp.getShots = getShots;
 
 }());
+'use strict';
+
 var infApp = infApp || {};
 
+(function(){
+  function addMoreShotsOnScroll() {
+    var body = document.body,
+        html = document.documentElement;
+
+        console.info(document.body.scrollHeight)
+
+    var offset = window.pageYOffset;
+    var iHeight = window.innerHeight;
+    var wHeight = Math.max( body.scrollHeight, body.offsetHeight,
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+    console.log('offset: ' + offset +
+                '\nheight: ' + wHeight);
+
+    if (offset + iHeight === wHeight) {
+      console.info('reached the bottom')
+      infApp.getShots({page:infApp.pageCount + 1});
+    }
+
+  };
+
+  window.onscroll = addMoreShotsOnScroll;
+
+  infApp.addMoreShotsOnScroll = addMoreShotsOnScroll;
+}());
+'use strict';
+
+var infApp = infApp || {};
+
+
 (function() {
-  if (document.readyState != 'loading'){
+  infApp.init = function() {
     infApp.getShots();
+    infApp.addMoreShotsOnScroll();
+  };
+
+  if (document.readyState != 'loading'){
+    infApp.init();
+
   } else {
-    document.addEventListener('DOMContentLoaded', infApp.getShots());
+    document.addEventListener('DOMContentLoaded', infApp.init());
+
   }
 }());
 
