@@ -14,11 +14,12 @@ var infApp = infApp || {};
     var wHeight = Math.max( body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
-    console.log('offset: ' + offset +
-                '\nheight: ' + wHeight);
+    // console.log('offset: ' + offset +
+    //             '\nheight: ' + wHeight);
 
-    if (offset + iHeight === wHeight) {
-      console.info('reached the bottom')
+    // adding min offset to prevent double loading
+    if (offset > wHeight && offset + iHeight === wHeight) {
+      console.info('reached the bottom');
       infApp.getShots({page:infApp.pageCount + 1});
     }
 

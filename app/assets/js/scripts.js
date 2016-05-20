@@ -22,7 +22,7 @@ var infApp = infApp || {};
   function prepTemplate(item) {
     var template = "";
 
-    template += '<img src="' + item.images.normal + '" alt="' + item.title +'" style="max-widht:100%;">';
+    template += '<img data-src="' + item.images.normal + '" alt="' + item.title +'">';
 
     return template;
   }
@@ -79,7 +79,11 @@ var infApp = infApp || {};
 
         infApp.pageCount = (infApp.pageCount += 1) || 1;
 
-        console.debug(infApp.pageCount);
+
+        // callbacks
+        infApp.prepLazyLoading();
+
+        // console.debug(infApp.pageCount);
 
       } else {
         console.error(request.responseText);
@@ -103,6 +107,61 @@ var infApp = infApp || {};
 var infApp = infApp || {};
 
 (function(){
+
+  function prepLazyLoading() {
+    // console.log('prepLazyLoading');
+    window.addEventListener("DOMContentLoaded", lazyLoadImages);
+    window.addEventListener("load", lazyLoadImages);
+    window.addEventListener("resize", lazyLoadImages);
+    window.addEventListener("scroll", lazyLoadImages);
+    lazyLoadImages();
+  }
+
+    function lazyLoadImages() {
+      var images = document.querySelectorAll("#shots-container img[data-src]"),
+          item;
+
+          console.warn(images);
+
+          images[0].setAttribute("src",images[0].getAttribute("data-src"));
+          images[0].removeAttribute("data-src");
+
+      // images.forEach(function(image){
+      //   if (isElementInViewport(image)) {
+      //     image.setAttribute("src",image.getAttribute("data-src"));
+      //     image.removeAttribute("data-src");
+      //   }
+      // });
+
+      // if all the images are loaded, stop calling the handler
+      // if (images.length === 0) {
+      //   window.removeEventListener("DOMContentLoaded", lazyLoadImages);
+      //   window.removeEventListener("load", lazyLoadImages);
+      //   window.removeEventListener("resize", lazyLoadImages);
+      //   window.removeEventListener("scroll", lazyLoadImages);
+      // }
+    }
+
+  function isElementInViewport (el) {
+    var rect = el.getBoundingClientRect();
+
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+    );
+  }
+
+  infApp.prepLazyLoading = prepLazyLoading;
+
+
+}());
+'use strict';
+
+var infApp = infApp || {};
+
+(function(){
   function addMoreShotsOnScroll() {
     var body = document.body,
         html = document.documentElement;
@@ -114,11 +173,12 @@ var infApp = infApp || {};
     var wHeight = Math.max( body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
-    console.log('offset: ' + offset +
-                '\nheight: ' + wHeight);
+    // console.log('offset: ' + offset +
+    //             '\nheight: ' + wHeight);
 
-    if (offset + iHeight === wHeight) {
-      console.info('reached the bottom')
+    // adding min offset to prevent double loading
+    if (offset > wHeight && offset + iHeight === wHeight) {
+      console.info('reached the bottom');
       infApp.getShots({page:infApp.pageCount + 1});
     }
 
@@ -137,6 +197,7 @@ var infApp = infApp || {};
   infApp.init = function() {
     infApp.getShots();
     infApp.addMoreShotsOnScroll();
+    // infApp.prepLazyLoading();
   };
 
   if (document.readyState != 'loading'){

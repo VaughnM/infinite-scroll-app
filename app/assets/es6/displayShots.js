@@ -8,7 +8,7 @@ var infApp = infApp || {};
   function prepTemplate(item) {
     var template = "";
 
-    template += '<img src="' + item.images.normal + '" alt="' + item.title +'" style="max-widht:100%;">';
+    template += '<img data-src="' + item.images.normal + '" alt="' + item.title +'">';
 
     return template;
   }

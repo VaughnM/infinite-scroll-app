@@ -43,7 +43,11 @@ var infApp = infApp || {};
 
         infApp.pageCount = (infApp.pageCount += 1) || 1;
 
-        console.debug(infApp.pageCount);
+
+        // callbacks
+        infApp.prepLazyLoading();
+
+        // console.debug(infApp.pageCount);
 
       } else {
         console.error(request.responseText);

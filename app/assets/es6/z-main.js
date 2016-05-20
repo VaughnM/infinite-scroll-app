@@ -7,6 +7,7 @@ var infApp = infApp || {};
   infApp.init = function() {
     infApp.getShots();
     infApp.addMoreShotsOnScroll();
+    // infApp.prepLazyLoading();
   };
 
   if (document.readyState != 'loading'){
