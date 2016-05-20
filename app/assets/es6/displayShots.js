@@ -5,12 +5,22 @@ var infApp = infApp || {};
 (function(){
 
   // creating a HTML template using a json object
-  function prepTemplate(item) {
-    var template = "";
+  function prepTemplate(shot) {
+    var t = "";
 
-    template += '<img data-src="' + item.images.normal + '" alt="' + item.title +'">';
+    console.info(shot);
 
-    return template;
+    t += '<figure class="shot" data-id="' + shot.id + '">' +
+            '<figcaption class="shot-overlay">'+
+              '<h2 class="shot-title">' + shot.title + '</h2>' +
+              '<hr>' +
+              '<p>' + shot.user.name + '</p>' +
+              '<button onclick="infApp.favouriteShot(' + shot.id + ')">Favourite</button>' +
+            '</figcaption>' +
+            '<img data-src="' + shot.images.normal + '" alt="' + shot.title + '">' +
+          '</figure>';
+
+    return t;
   }
 
   function prepAllHtml(jsonObj) {

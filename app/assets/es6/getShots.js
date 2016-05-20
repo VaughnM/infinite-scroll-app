@@ -4,7 +4,7 @@ var infApp = infApp || {};
 
 (function(){
 
-  function getShots(options){
+  function getShots(options, successCallback, failureCallback){
     var request = new XMLHttpRequest();
 
     var options = options || {};
@@ -44,10 +44,9 @@ var infApp = infApp || {};
         infApp.pageCount = (infApp.pageCount += 1) || 1;
 
 
-        // callbacks
-        infApp.prepLazyLoading();
-
-        // console.debug(infApp.pageCount);
+        if (successCallback && typeof successCallback === 'function') {
+          successCallback();
+        }
 
       } else {
         console.error(request.responseText);
@@ -57,6 +56,10 @@ var infApp = infApp || {};
     request.onerror = function() {
       // There was a connection error of some sort
       console.error("Something went wrong with API request");
+      if (errorCallback && typeof errorCallback === 'function') {
+        errorCallback();
+      }
+
     };
 
     request.send();

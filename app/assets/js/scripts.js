@@ -19,12 +19,22 @@ var infApp = infApp || {};
 (function(){
 
   // creating a HTML template using a json object
-  function prepTemplate(item) {
-    var template = "";
+  function prepTemplate(shot) {
+    var t = "";
 
-    template += '<img data-src="' + item.images.normal + '" alt="' + item.title +'">';
+    console.info(shot);
 
-    return template;
+    t += '<figure class="shot" data-id="' + shot.id + '">' +
+            '<figcaption class="shot-overlay">'+
+              '<h2 class="shot-title">' + shot.title + '</h2>' +
+              '<hr>' +
+              '<p>' + shot.user.name + '</p>' +
+              '<button onclick="infApp.favouriteShot(' + shot.id + ')">Favourite</button>' +
+            '</figcaption>' +
+            '<img data-src="' + shot.images.normal + '" alt="' + shot.title + '">' +
+          '</figure>';
+
+    return t;
   }
 
   function prepAllHtml(jsonObj) {
@@ -40,7 +50,7 @@ var infApp = infApp || {};
 
 (function(){
 
-  function getShots(options){
+  function getShots(options, successCallback, failureCallback){
     var request = new XMLHttpRequest();
 
     var options = options || {};
@@ -80,10 +90,9 @@ var infApp = infApp || {};
         infApp.pageCount = (infApp.pageCount += 1) || 1;
 
 
-        // callbacks
-        infApp.prepLazyLoading();
-
-        // console.debug(infApp.pageCount);
+        if (successCallback && typeof successCallback === 'function') {
+          successCallback();
+        }
 
       } else {
         console.error(request.responseText);
@@ -93,6 +102,10 @@ var infApp = infApp || {};
     request.onerror = function() {
       // There was a connection error of some sort
       console.error("Something went wrong with API request");
+      if (errorCallback && typeof errorCallback === 'function') {
+        errorCallback();
+      }
+
     };
 
     request.send();
@@ -109,7 +122,6 @@ var infApp = infApp || {};
 (function(){
 
   function prepLazyLoading() {
-    // console.log('prepLazyLoading');
     window.addEventListener("DOMContentLoaded", lazyLoadImages);
     window.addEventListener("load", lazyLoadImages);
     window.addEventListener("resize", lazyLoadImages);
@@ -117,30 +129,18 @@ var infApp = infApp || {};
     lazyLoadImages();
   }
 
-    function lazyLoadImages() {
-      var images = document.querySelectorAll("#shots-container img[data-src]"),
-          item;
+  function lazyLoadImages() {
+    var images = document.querySelectorAll("#shots-container img[data-src]"),
+        item;
 
-          console.warn(images);
-
-          images[0].setAttribute("src",images[0].getAttribute("data-src"));
-          images[0].removeAttribute("data-src");
-
-      // images.forEach(function(image){
-      //   if (isElementInViewport(image)) {
-      //     image.setAttribute("src",image.getAttribute("data-src"));
-      //     image.removeAttribute("data-src");
-      //   }
-      // });
-
-      // if all the images are loaded, stop calling the handler
-      // if (images.length === 0) {
-      //   window.removeEventListener("DOMContentLoaded", lazyLoadImages);
-      //   window.removeEventListener("load", lazyLoadImages);
-      //   window.removeEventListener("resize", lazyLoadImages);
-      //   window.removeEventListener("scroll", lazyLoadImages);
-      // }
-    }
+    [].forEach.call(images, function(image, index) {
+      if (isElementInViewport(image)) {
+        console.log('image ' + index + ' loading.. ');
+        image.setAttribute("src",image.getAttribute("data-src"));
+        image.removeAttribute("data-src");
+      }
+    })
+  };
 
   function isElementInViewport (el) {
     var rect = el.getBoundingClientRect();
@@ -190,21 +190,21 @@ var infApp = infApp || {};
 
 (function(){
   function addMoreShotsOnScroll() {
+    var scrollAdvance = 200;
     var body = document.body,
         html = document.documentElement;
-
-        console.info(document.body.scrollHeight)
 
     var offset = window.pageYOffset;
     var iHeight = window.innerHeight;
     var wHeight = Math.max( body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
-    // console.log('offset: ' + offset +
-    //             '\nheight: ' + wHeight);
+    console.log('offset: ' + offset +/* ' iHeight: ' + iHeight +
+                ' = ' + (offset + iHeight) +*/
+                '\nheight: ' + wHeight);
 
     // adding min offset to prevent double loading
-    if (offset > wHeight && offset + iHeight === wHeight) {
+    if (offset + iHeight === wHeight) {
       console.info('reached the bottom');
       infApp.getShots({page:infApp.pageCount + 1});
     }
@@ -222,9 +222,16 @@ var infApp = infApp || {};
 
 (function() {
   infApp.init = function() {
-    infApp.getShots();
-    infApp.addMoreShotsOnScroll();
-    // infApp.prepLazyLoading();
+    var axajOptions = {
+      page: 1
+    };
+    var successCallback = function() {
+      console.log('successCallback')
+      infApp.prepLazyLoading();
+      infApp.addMoreShotsOnScroll();
+    };
+
+    infApp.getShots(axajOptions, successCallback);
   };
 
   if (document.readyState != 'loading'){

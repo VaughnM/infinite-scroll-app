@@ -1,8 +1,31 @@
 body {
+  padding: 10px;
   font-family: sans-serif;
-  background: lightblue;
+  background: lightgrey;
 
-  h1 {
-    color: tomato;
+}
+
+.shots-container {
+  width: 100%;
+}
+
+.shot {
+  display: block;
+  position: relative;
+
+  .shot-overlay {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &:hover {
+    .shot-overlay {
+      display: block;
+    }
   }
 }

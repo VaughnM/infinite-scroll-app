@@ -1,5 +1,20 @@
 body {
+  padding: 10px;
   font-family: sans-serif;
-  background: lightblue; }
-  body h1 {
-    color: tomato; }
+  background: lightgrey; }
+
+.shots-container {
+  width: 100%; }
+
+.shot {
+  display: block;
+  position: relative; }
+  .shot .shot-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; }
+  .shot:hover .shot-overlay {
+    display: block; }
