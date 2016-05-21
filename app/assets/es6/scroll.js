@@ -4,7 +4,6 @@ var infApp = infApp || {};
 
 (function(){
   function addMoreShotsOnScroll() {
-    var scrollAdvance = 200;
     var body = document.body,
         html = document.documentElement;
 
@@ -19,13 +18,12 @@ var infApp = infApp || {};
 
     // adding min offset to prevent double loading
     if (offset + iHeight === wHeight) {
-      console.info('reached the bottom');
       infApp.getShots({page:infApp.pageCount + 1});
+      document.removeEventListener('scroll', infApp.addMoreShotsOnScroll, false);
     }
 
   };
 
-  window.onscroll = addMoreShotsOnScroll;
-
   infApp.addMoreShotsOnScroll = addMoreShotsOnScroll;
+  document.addEventListener('scroll', infApp.addMoreShotsOnScroll, false);
 }());

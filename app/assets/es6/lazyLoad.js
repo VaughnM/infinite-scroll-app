@@ -18,7 +18,7 @@ var infApp = infApp || {};
 
     [].forEach.call(images, function(image, index) {
       if (isElementInViewport(image)) {
-        console.log('image ' + index + ' loading.. ');
+        // console.log('image ' + index + ' loading.. ');
         image.setAttribute("src",image.getAttribute("data-src"));
         image.removeAttribute("data-src");
       }

@@ -1,3 +1,162 @@
+.cssload-wrapper {
+  padding-left: 1em;
+  padding-right: 1em;
+  margin: auto;
+  display: block;
+  width: 195px; }
+
+.cssload-loader {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  margin: 3em;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle; }
+
+.cssload-loader {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  margin: 3em;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle; }
+
+.cssload-loader,
+.cssload-loader:before,
+.cssload-loader:after {
+  animation: 1.15s infinite ease-in-out;
+  -o-animation: 1.15s infinite ease-in-out;
+  -ms-animation: 1.15s infinite ease-in-out;
+  -webkit-animation: 1.15s infinite ease-in-out;
+  -moz-animation: 1.15s infinite ease-in-out; }
+
+.cssload-loader:before,
+.cssload-loader:after {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.cssload-loader:before,
+.cssload-loader:after {
+  content: ""; }
+
+.cssload-loader {
+  animation: cssload-animation1 1.73s infinite linear;
+  -o-animation: cssload-animation1 1.73s infinite linear;
+  -ms-animation: cssload-animation1 1.73s infinite linear;
+  -webkit-animation: cssload-animation1 1.73s infinite linear;
+  -moz-animation: cssload-animation1 1.73s infinite linear; }
+
+.cssload-loader:before,
+.cssload-loader:after {
+  content: "";
+  margin: -24px 0 0 -24px;
+  top: 50%;
+  left: 50%;
+  background-color: rgba(30, 30, 30, 0.7);
+  animation-name: cssload-animation2;
+  -o-animation-name: cssload-animation2;
+  -ms-animation-name: cssload-animation2;
+  -webkit-animation-name: cssload-animation2;
+  -moz-animation-name: cssload-animation2; }
+
+.cssload-loader:after {
+  animation-direction: reverse;
+  -o-animation-direction: reverse;
+  -ms-animation-direction: reverse;
+  -webkit-animation-direction: reverse;
+  -moz-animation-direction: reverse; }
+
+@keyframes cssload-animation1 {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+@-o-keyframes cssload-animation1 {
+  0% {
+    -o-transform: rotate(0deg); }
+  100% {
+    -o-transform: rotate(360deg); } }
+
+@-ms-keyframes cssload-animation1 {
+  0% {
+    -ms-transform: rotate(0deg); }
+  100% {
+    -ms-transform: rotate(360deg); } }
+
+@-webkit-keyframes cssload-animation1 {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@-moz-keyframes cssload-animation1 {
+  0% {
+    -moz-transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(360deg); } }
+
+@keyframes cssload-animation2 {
+  0% {
+    transform: scale(0.2);
+    left: 0%; }
+  50% {
+    transform: scale(1);
+    left: 50%; }
+  100% {
+    transform: scale(0.2);
+    left: 100%; } }
+
+@-o-keyframes cssload-animation2 {
+  0% {
+    -o-transform: scale(0.2);
+    left: 0%; }
+  50% {
+    -o-transform: scale(1);
+    left: 50%; }
+  100% {
+    -o-transform: scale(0.2);
+    left: 100%; } }
+
+@-ms-keyframes cssload-animation2 {
+  0% {
+    -ms-transform: scale(0.2);
+    left: 0%; }
+  50% {
+    -ms-transform: scale(1);
+    left: 50%; }
+  100% {
+    -ms-transform: scale(0.2);
+    left: 100%; } }
+
+@-webkit-keyframes cssload-animation2 {
+  0% {
+    -webkit-transform: scale(0.2);
+    left: 0%; }
+  50% {
+    -webkit-transform: scale(1);
+    left: 50%; }
+  100% {
+    -webkit-transform: scale(0.2);
+    left: 100%; } }
+
+@-moz-keyframes cssload-animation2 {
+  0% {
+    -moz-transform: scale(0.2);
+    left: 0%; }
+  50% {
+    -moz-transform: scale(1);
+    left: 50%; }
+  100% {
+    -moz-transform: scale(0.2);
+    left: 100%; } }
+
 img {
   width: 33%; }
 
@@ -12,6 +171,9 @@ body {
 * {
   box-sizing: border-box; }
 
+.hidden {
+  display: none !important; }
+
 #shots-container {
   width: 100%;
   display: flex;
@@ -23,25 +185,27 @@ figure {
   margin: auto;
   padding: 0; }
 
+.shot.favourite {
+  border-bottom: 2px solid gold; }
+
 .shot {
   position: relative;
   margin-bottom: 10px;
   align-self: center;
   border-radius: 4px;
   overflow: hidden;
+  bacgkround-image: url(../images/preloader.gif);
+  min-height: 50px;
   width: calc(100% - 5px * 2); }
-  @media only screen and (min-width: 600px) {
-    .shot {
-      width: calc(100% / 2 - 5px * 3); } }
   @media only screen and (min-width: 1024px) {
     .shot {
-      width: calc(100% / 3 - 5px * 4); } }
+      width: calc(100% / 2 - 5px * 3); } }
   @media only screen and (min-width: 1280px) {
     .shot {
-      width: calc(100% / 4 - 5px * 5); } }
+      width: calc(100% / 3 - 5px * 4); } }
   @media only screen and (min-width: 1440px) {
     .shot {
-      width: calc(100% / 5 - 5px * 6); } }
+      width: calc(100% / 4 - 5px * 5); } }
   .shot .shot-overlay {
     opacity: 0;
     transition: all .2s ease-in; }
@@ -103,3 +267,162 @@ figure {
     font-size: 16px;
     line-height: 40px;
     border: 1px solid rgba(255, 255, 255, 0.5); }
+
+.cssload-wrapper {
+  padding-left: 1em;
+  padding-right: 1em;
+  margin: auto;
+  display: block;
+  width: 195px; }
+
+.cssload-loader {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  margin: 3em;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle; }
+
+.cssload-loader {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  margin: 3em;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle; }
+
+.cssload-loader,
+.cssload-loader:before,
+.cssload-loader:after {
+  animation: 1.15s infinite ease-in-out;
+  -o-animation: 1.15s infinite ease-in-out;
+  -ms-animation: 1.15s infinite ease-in-out;
+  -webkit-animation: 1.15s infinite ease-in-out;
+  -moz-animation: 1.15s infinite ease-in-out; }
+
+.cssload-loader:before,
+.cssload-loader:after {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.cssload-loader:before,
+.cssload-loader:after {
+  content: ""; }
+
+.cssload-loader {
+  animation: cssload-animation1 1.73s infinite linear;
+  -o-animation: cssload-animation1 1.73s infinite linear;
+  -ms-animation: cssload-animation1 1.73s infinite linear;
+  -webkit-animation: cssload-animation1 1.73s infinite linear;
+  -moz-animation: cssload-animation1 1.73s infinite linear; }
+
+.cssload-loader:before,
+.cssload-loader:after {
+  content: "";
+  margin: -24px 0 0 -24px;
+  top: 50%;
+  left: 50%;
+  background-color: rgba(30, 30, 30, 0.7);
+  animation-name: cssload-animation2;
+  -o-animation-name: cssload-animation2;
+  -ms-animation-name: cssload-animation2;
+  -webkit-animation-name: cssload-animation2;
+  -moz-animation-name: cssload-animation2; }
+
+.cssload-loader:after {
+  animation-direction: reverse;
+  -o-animation-direction: reverse;
+  -ms-animation-direction: reverse;
+  -webkit-animation-direction: reverse;
+  -moz-animation-direction: reverse; }
+
+@keyframes cssload-animation1 {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+@-o-keyframes cssload-animation1 {
+  0% {
+    -o-transform: rotate(0deg); }
+  100% {
+    -o-transform: rotate(360deg); } }
+
+@-ms-keyframes cssload-animation1 {
+  0% {
+    -ms-transform: rotate(0deg); }
+  100% {
+    -ms-transform: rotate(360deg); } }
+
+@-webkit-keyframes cssload-animation1 {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@-moz-keyframes cssload-animation1 {
+  0% {
+    -moz-transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(360deg); } }
+
+@keyframes cssload-animation2 {
+  0% {
+    transform: scale(0.2);
+    left: 0%; }
+  50% {
+    transform: scale(1);
+    left: 50%; }
+  100% {
+    transform: scale(0.2);
+    left: 100%; } }
+
+@-o-keyframes cssload-animation2 {
+  0% {
+    -o-transform: scale(0.2);
+    left: 0%; }
+  50% {
+    -o-transform: scale(1);
+    left: 50%; }
+  100% {
+    -o-transform: scale(0.2);
+    left: 100%; } }
+
+@-ms-keyframes cssload-animation2 {
+  0% {
+    -ms-transform: scale(0.2);
+    left: 0%; }
+  50% {
+    -ms-transform: scale(1);
+    left: 50%; }
+  100% {
+    -ms-transform: scale(0.2);
+    left: 100%; } }
+
+@-webkit-keyframes cssload-animation2 {
+  0% {
+    -webkit-transform: scale(0.2);
+    left: 0%; }
+  50% {
+    -webkit-transform: scale(1);
+    left: 50%; }
+  100% {
+    -webkit-transform: scale(0.2);
+    left: 100%; } }
+
+@-moz-keyframes cssload-animation2 {
+  0% {
+    -moz-transform: scale(0.2);
+    left: 0%; }
+  50% {
+    -moz-transform: scale(1);
+    left: 50%; }
+  100% {
+    -moz-transform: scale(0.2);
+    left: 100%; } }

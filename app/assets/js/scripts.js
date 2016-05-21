@@ -36,7 +36,7 @@ var infApp = infApp || {};
                 '<button onclick="infApp.favouriteShot(' + shot.id + ')">Favourite</button>' +
               '</div>' +
             '</figcaption>' +
-            '<img data-src="' + shot.images.teaser + '" alt="' + shot.title + '">' +
+            '<img data-src="' + shot.images.normal + '" alt="' + shot.title + '">' +
           '</figure>';
 
     return t;
@@ -146,8 +146,8 @@ var infApp = infApp || {};
                       '&access_token=' +
                       infApp.settings.api.access_token;
 
-
     request.open('GET', requestUrl , true);
+    toggleMainPreloader();
 
     request.onload = function() {
       var html = [];
@@ -155,8 +155,6 @@ var infApp = infApp || {};
 
       if (request.status >= 200 && request.status < 400) {
         infApp.shots = JSON.parse(request.responseText);
-
-        console.debug(infApp.shots);
 
         infApp.shots.forEach(function(item){
           html.push(infApp.prepTemplate(item));
@@ -167,7 +165,8 @@ var infApp = infApp || {};
         document.getElementById('shots-container').innerHTML += htmlString;
 
         infApp.pageCount = (infApp.pageCount += 1) || 1;
-
+        toggleMainPreloader();
+        document.addEventListener('scroll', infApp.addMoreShotsOnScroll, false);
 
         if (successCallback && typeof successCallback === 'function') {
           successCallback();
@@ -189,6 +188,12 @@ var infApp = infApp || {};
 
     request.send();
   };
+
+  function toggleMainPreloader() {
+    var element = document.getElementById('main-preloader');
+
+    element.classList.toggle('hidden');
+  }
 
 
   infApp.getShots = getShots;
@@ -214,7 +219,7 @@ var infApp = infApp || {};
 
     [].forEach.call(images, function(image, index) {
       if (isElementInViewport(image)) {
-        console.log('image ' + index + ' loading.. ');
+        // console.log('image ' + index + ' loading.. ');
         image.setAttribute("src",image.getAttribute("data-src"));
         image.removeAttribute("data-src");
       }
@@ -269,7 +274,6 @@ var infApp = infApp || {};
 
 (function(){
   function addMoreShotsOnScroll() {
-    var scrollAdvance = 200;
     var body = document.body,
         html = document.documentElement;
 
@@ -284,15 +288,14 @@ var infApp = infApp || {};
 
     // adding min offset to prevent double loading
     if (offset + iHeight === wHeight) {
-      console.info('reached the bottom');
       infApp.getShots({page:infApp.pageCount + 1});
+      document.removeEventListener('scroll', infApp.addMoreShotsOnScroll, false);
     }
 
   };
 
-  window.onscroll = addMoreShotsOnScroll;
-
   infApp.addMoreShotsOnScroll = addMoreShotsOnScroll;
+  document.addEventListener('scroll', infApp.addMoreShotsOnScroll, false);
 }());
 'use strict';
 
@@ -305,7 +308,6 @@ var infApp = infApp || {};
       page: 1
     };
     var successCallback = function() {
-      console.log('successCallback')
       infApp.prepLazyLoading();
       infApp.addMoreShotsOnScroll();
     };

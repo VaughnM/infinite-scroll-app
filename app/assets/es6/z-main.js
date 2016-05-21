@@ -9,7 +9,6 @@ var infApp = infApp || {};
       page: 1
     };
     var successCallback = function() {
-      console.log('successCallback')
       infApp.prepLazyLoading();
       infApp.addMoreShotsOnScroll();
     };

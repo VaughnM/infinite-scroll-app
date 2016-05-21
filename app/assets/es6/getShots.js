@@ -21,8 +21,8 @@ var infApp = infApp || {};
                       '&access_token=' +
                       infApp.settings.api.access_token;
 
-
     request.open('GET', requestUrl , true);
+    toggleMainPreloader();
 
     request.onload = function() {
       var html = [];
@@ -30,8 +30,6 @@ var infApp = infApp || {};
 
       if (request.status >= 200 && request.status < 400) {
         infApp.shots = JSON.parse(request.responseText);
-
-        console.debug(infApp.shots);
 
         infApp.shots.forEach(function(item){
           html.push(infApp.prepTemplate(item));
@@ -42,7 +40,8 @@ var infApp = infApp || {};
         document.getElementById('shots-container').innerHTML += htmlString;
 
         infApp.pageCount = (infApp.pageCount += 1) || 1;
-
+        toggleMainPreloader();
+        document.addEventListener('scroll', infApp.addMoreShotsOnScroll, false);
 
         if (successCallback && typeof successCallback === 'function') {
           successCallback();
@@ -64,6 +63,12 @@ var infApp = infApp || {};
 
     request.send();
   };
+
+  function toggleMainPreloader() {
+    var element = document.getElementById('main-preloader');
+
+    element.classList.toggle('hidden');
+  }
 
 
   infApp.getShots = getShots;

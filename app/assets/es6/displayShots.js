@@ -22,7 +22,7 @@ var infApp = infApp || {};
                 '<button onclick="infApp.favouriteShot(' + shot.id + ')">Favourite</button>' +
               '</div>' +
             '</figcaption>' +
-            '<img data-src="' + shot.images.teaser + '" alt="' + shot.title + '">' +
+            '<img data-src="' + shot.images.normal + '" alt="' + shot.title + '">' +
           '</figure>';
 
     return t;
