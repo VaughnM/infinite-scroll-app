@@ -33,6 +33,7 @@ var infApp = infApp || {};
                 '<h2 class="shot-title">' + shot.title + '</h2>' +
                 '<hr>' +
                 '<p class="shot-author">' + shot.user.name + '</p>' +
+                '<span class="favourite-heart"></span>' +
               '</div>' +
               '<div class="shot-overlay-cta">' +
                 '<button onclick="infApp.favouriteShot(' + shot.id + ')">Favourite</button>' +

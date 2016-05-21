@@ -185,19 +185,15 @@ figure {
   margin: auto;
   padding: 0; }
 
-.shot.favourite {
-  border-bottom: 2px solid gold; }
-
 .shot {
   position: relative;
   margin-bottom: 10px;
   align-self: center;
   border-radius: 4px;
   overflow: hidden;
-  bacgkround-image: url(../images/preloader.gif);
   min-height: 50px;
   width: calc(100% - 5px * 2); }
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-width: 600px) {
     .shot {
       width: calc(100% / 2 - 5px * 3); } }
   @media only screen and (min-width: 1280px) {
@@ -267,6 +263,22 @@ figure {
     font-size: 16px;
     line-height: 40px;
     border: 1px solid rgba(255, 255, 255, 0.5); }
+    .shot-overlay-cta button:active, .shot-overlay-cta button:focus {
+      outline: none; }
+
+span.favourite-heart {
+  opacity: 0;
+  transition: all .5s ease-in; }
+
+.shot.favourite span.favourite-heart {
+  opacity: 1;
+  transition: all .5s ease-out;
+  background-image: url(../images/heart.svg);
+  background-repeat: no-repeat;
+  height: 21px;
+  width: 21px;
+  margin-top: 12px;
+  display: inline-block; }
 
 .cssload-wrapper {
   padding-left: 1em;
