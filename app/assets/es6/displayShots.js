@@ -8,8 +8,10 @@ var infApp = infApp || {};
   function prepTemplate(shot) {
     var t = "";
     var favourite = infApp.checkIfFavourite(shot.id) ? ' favourite' : '';
-
-    // console.info(shot);
+    var pixelRation = window.devicePixelRatio;
+    var imageUrl = window.devicePixelRatio > 1 && shot.images.hidpi
+                    ? shot.images.hidpi
+                    : shot.images.normal;
 
     t += '<figure class="shot'+ favourite +'" id="' + shot.id + '">' +
             '<figcaption class="shot-overlay">'+
@@ -22,7 +24,7 @@ var infApp = infApp || {};
                 '<button onclick="infApp.favouriteShot(' + shot.id + ')">Favourite</button>' +
               '</div>' +
             '</figcaption>' +
-            '<img data-src="' + shot.images.normal + '" alt="' + shot.title + '">' +
+            '<img data-src="' + imageUrl + '" alt="' + shot.title + '">' +
           '</figure>';
 
     return t;
