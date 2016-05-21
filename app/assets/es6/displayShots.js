@@ -7,10 +7,11 @@ var infApp = infApp || {};
   // creating a HTML template using a json object
   function prepTemplate(shot) {
     var t = "";
+    var favourite = infApp.checkIfFavourite(shot.id) ? ' favourite' : '';
 
     // console.info(shot);
 
-    t += '<figure class="shot" data-id="' + shot.id + '">' +
+    t += '<figure class="shot'+ favourite +'" id="' + shot.id + '">' +
             '<figcaption class="shot-overlay">'+
               '<div class="shot-overlay-text">' +
                 '<h2 class="shot-title">' + shot.title + '</h2>' +
