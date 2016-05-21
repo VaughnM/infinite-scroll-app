@@ -1,20 +1,105 @@
-body {
-  padding: 10px;
-  font-family: sans-serif;
-  background: lightgrey; }
+img {
+  width: 33%; }
 
-.shots-container {
-  width: 100%; }
+
+body {
+  padding: 10px 5px;
+  margin: 0;
+  font-family: sans-serif;
+  background: lightgrey;
+  font-family: "Helvetica Neue", "Helvetica-Neue", "Arial", sans-serif; }
+
+* {
+  box-sizing: border-box; }
+
+#shots-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap; }
+
+figure {
+  margin: auto;
+  padding: 0; }
 
 .shot {
-  display: block;
-  position: relative; }
+  position: relative;
+  margin-bottom: 10px;
+  align-self: center;
+  border-radius: 4px;
+  overflow: hidden;
+  width: calc(100% - 5px * 2); }
+  @media only screen and (min-width: 600px) {
+    .shot {
+      width: calc(100% / 2 - 5px * 3); } }
+  @media only screen and (min-width: 1024px) {
+    .shot {
+      width: calc(100% / 3 - 5px * 4); } }
+  @media only screen and (min-width: 1280px) {
+    .shot {
+      width: calc(100% / 4 - 5px * 5); } }
+  @media only screen and (min-width: 1440px) {
+    .shot {
+      width: calc(100% / 5 - 5px * 6); } }
   .shot .shot-overlay {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0; }
+    opacity: 0;
+    transition: all .2s ease-in; }
   .shot:hover .shot-overlay {
-    display: block; }
+    display: flex;
+    opacity: 1;
+    transition: all .2s ease-out; }
+  .shot img {
+    width: 100%;
+    border-radius: 4px; }
+
+.shot-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 3px;
+  left: 0;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  background-image: radial-gradient(circle farthest-corner, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.4));
+  display: flex;
+  flex-direction: column; }
+  .shot-overlay hr {
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: 2px;
+    background-color: white; }
+
+.shot-overlay-text {
+  margin: auto;
+  align-self: center;
+  width: 80%; }
+  .shot-overlay-text h2.shot-title {
+    margin: 0;
+    margin-bottom: 5px; }
+  .shot-overlay-text p.shot-author {
+    margin: 0;
+    margin-top: 5px;
+    font-style: italic; }
+  .shot-overlay-text hr {
+    max-width: 120px;
+    margin: auto; }
+
+.shot-overlay-cta {
+  align-self: center;
+  margin-bottom: 30px; }
+  .shot-overlay-cta button {
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    box-sizing: border-box;
+    border-radius: 20px;
+    border: medium medium;
+    height: 40px;
+    padding: 0 30px;
+    font-size: 16px;
+    line-height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.5); }

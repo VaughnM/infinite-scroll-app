@@ -13,9 +13,9 @@ var infApp = infApp || {};
     var wHeight = Math.max( body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
-    console.log('offset: ' + offset +/* ' iHeight: ' + iHeight +
-                ' = ' + (offset + iHeight) +*/
-                '\nheight: ' + wHeight);
+    // console.log('offset: ' + offset +/* ' iHeight: ' + iHeight +
+                // ' = ' + (offset + iHeight) +*/
+                // '\nheight: ' + wHeight);
 
     // adding min offset to prevent double loading
     if (offset + iHeight === wHeight) {
