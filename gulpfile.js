@@ -10,7 +10,21 @@ var src = {
     scss: 'app/assets/css/*.scss',
     css:  'app/assets/css',
     html: 'app/*.html',
-    jsSource:  'app/assets/js-source/*.js',
+    jsSource:  [
+                /**
+                 * Loading _settings.js first,
+                 * it's got api key
+                 * and adds strict mode statement to the whole app
+                 */
+                'app/assets/js-source/_settings.js',
+                'app/assets/js-source/!(main)*.js',
+                /**
+                 * Loading main.js last,
+                 * it initializes the app
+                 */
+                'app/assets/js-source/main.js'
+                ],
+    jsLint: 'app/assets/js-source/*.js',
     js:   'app/assets/js/'
 };
 
@@ -37,7 +51,7 @@ gulp.task('sass', function() {
 });
 
 // Do js magic
-gulp.task('js', function() {
+gulp.task('js', ['lint'], function() {
     return gulp.src(src.jsSource)
         .pipe(sourcemaps.init())
         .pipe(concat('scripts.js'))
@@ -48,14 +62,14 @@ gulp.task('js', function() {
 
 
 gulp.task('lint', function () {
-    return gulp.src([src.jsSource])
+    return gulp.src([src.jsLint])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
 });
 
 gulp.task('lint-watch', function() {
-    gulp.watch(src.jsSource, ['lint']);
+    gulp.watch(src.jsLint, ['lint']);
 });
 
 gulp.task('default', ['serve']);

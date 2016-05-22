@@ -7,6 +7,7 @@ var infApp = infApp || {};
   function prepTemplate(shot) {
     var t = '';
     var favourite = infApp.checkIfFavourite(shot.id) ? ' favourite' : '';
+
     // serving 2x images only when device pixel ration can handle them
     var imageUrl = window.devicePixelRatio > 1 && shot.images.hidpi
                     ? shot.images.hidpi
