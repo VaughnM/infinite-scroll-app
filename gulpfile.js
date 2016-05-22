@@ -5,6 +5,9 @@ var sourcemaps   = require('gulp-sourcemaps');
 var concat       = require('gulp-concat');
 var eslint       = require('gulp-eslint');
 var autoprefixer = require('gulp-autoprefixer');
+var rename       = require('gulp-rename');
+var replace      = require('gulp-replace');
+var argv         = require('yargs').argv;
 
 var reload       = browserSync.reload;
 
@@ -65,9 +68,8 @@ gulp.task('js', function() {
         .pipe(reload({stream: true}));
 });
 
-
 gulp.task('lint', function () {
-    return gulp.src([src.jsLint])
+    return gulp.src(src.jsLint)
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
@@ -75,6 +77,16 @@ gulp.task('lint', function () {
 
 gulp.task('lint-watch', function() {
     gulp.watch(src.jsLint, ['lint']);
+});
+
+gulp.task('init', function() {
+    var oldString = "access_token: ''";
+    var newString = "access_token: '" + argv.access_token + "'";
+
+    return gulp.src('app/assets/js-source/_settings.example')
+        .pipe(replace(oldString, newString))
+        .pipe(rename('_settings.js'))
+        .pipe(gulp.dest('app/assets/js-source/'));
 });
 
 gulp.task('default', ['serve']);

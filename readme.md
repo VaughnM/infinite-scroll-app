@@ -4,9 +4,9 @@ Uses Dribbble API to retrieve images of projects. Displays them. Alows user to f
 
 ##Instructions
 
-Get all dependancies `$ npm install`.
+Get all dependancies `npm install`.
 
-Run local server `$ gulp`.
+Run local server `gulp`.
 
 You will also need to rename *_settings.example* to *_settings.js* and add your Dribbble API access_token to it.
 
