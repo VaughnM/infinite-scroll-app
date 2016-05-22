@@ -3,7 +3,12 @@
 var infApp = infApp || {};
 
 (function run() {
-  function favouriteShot(shotId) {
+  infApp.favourites = {
+    toggle: toggle,
+    isFavourite: isFavourite
+  };
+
+  function toggle(shotId) {
     var storage = window.localStorage;
     var favourites = storage.getItem('favourites');
     var newArray = [];
@@ -13,18 +18,18 @@ var infApp = infApp || {};
       return storage.setItem('favourites', JSON.stringify(newArray));
     }
 
-    if (checkIfFavourite(shotId)) {
-      return removeFromFavourites(shotId);
+    if (isFavourite(shotId)) {
+      return _remove(shotId);
     }
 
     newArray = JSON.parse(favourites);
     newArray.push(shotId);
-    toggleFavouriteCssClass(shotId);
+    infApp.helpers.toggleClass('#shotId-' + shotId, 'favourite');
 
     return storage.setItem('favourites', JSON.stringify(newArray));
   }
 
-  function checkIfFavourite(shotId) {
+  function isFavourite(shotId) {
     var storage = window.localStorage;
     var favourites = storage.getItem('favourites');
     var favouritesArr;
@@ -43,7 +48,7 @@ var infApp = infApp || {};
     return result;
   }
 
-  function removeFromFavourites(shotId) {
+  function _remove(shotId) {
     var storage = window.localStorage;
     var favourites = storage.getItem('favourites');
     var newArray = JSON.parse(favourites);
@@ -51,18 +56,9 @@ var infApp = infApp || {};
 
     if (index > -1) {
       newArray.splice(index, 1);
-      toggleFavouriteCssClass(shotId);
+      infApp.helpers.toggleClass('#shotId-' + shotId, 'favourite');
     }
 
     return storage.setItem('favourites', JSON.stringify(newArray));
   }
-
-  function toggleFavouriteCssClass(shotId) {
-    var element = document.getElementById(shotId);
-
-    element.classList.toggle('favourite');
-  }
-
-  infApp.favouriteShot = favouriteShot;
-  infApp.checkIfFavourite = checkIfFavourite;
 }());

@@ -2,25 +2,24 @@
 
 var infApp = infApp || {};
 
-
 (function run() {
   infApp.init = function init() {
     var axajOptions = {
       page: 1
     };
     var successCallback = function successCallback() {
-      infApp.prepLazyLoading();
-      infApp.addMoreShotsOnScroll();
+      infApp.lazyLoad.init();
+      infApp.scroll.callForMoreShots();
     };
 
-    infApp.getShots(axajOptions, successCallback);
+    infApp.ajax.get(axajOptions, successCallback);
   };
 
   // document.ready function
   if (document.readyState !== 'loading') {
     infApp.init();
   } else {
-    document.addEventListener('DOMContentLoaded', infApp.init());
+    document.addEventListener('DOMContentLoaded', infApp.init);
   }
 }());
 
