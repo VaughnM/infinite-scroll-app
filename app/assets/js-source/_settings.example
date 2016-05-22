@@ -1,0 +1,12 @@
+'use strict';
+
+var infApp = infApp || {};
+
+(function run() {
+  infApp.settings = {
+    api: {
+      baseUrl: 'https://api.dribbble.com/v1',
+      access_token: ''
+    }
+  };
+}());

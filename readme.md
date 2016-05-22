@@ -2,6 +2,14 @@
 
 Uses Dribbble API to retrieve images of projects. Displays them. Alows user to favourite the projects (saves data to local storage of the browser);
 
+##Instructions
+
+Get all dependancies `$ npm install`.
+
+Run local server `$ gulp`.
+
+You will also need to rename *_settings.example* to *_settings.js* and add your Dribbble API access_token to it.
+
 ##Todo
 
 - Set up build system [x]
@@ -9,14 +17,14 @@ Uses Dribbble API to retrieve images of projects. Displays them. Alows user to f
   - Babel (ES6 here I come!) [x]
   - Browsersync [x]
   - Concatenation (CSS and JS) [x]
-- Hit the API at `https://api.dribbble.com/v1/shots`
-- Lazy-load images
-- Use responsive image solution (load 2x images only when needed)
-- Infinite scroll (load more images)
-- Recreate responsive design
-  - 3 breakpoints
-- Ability to favourite shot (saves shot id to local storage)
-- Enforce Airbnb or Github code style
+- Hit the API at `https://api.dribbble.com/v1/shots` [x]
+- Lazy-load images [x]
+- Use responsive image solution (load 2x images only when needed) [x]
+- Infinite scroll (load more images) [x]
+- Recreate responsive design [x]
+  - 3 breakpoints [x]
+- Ability to favourite shot (saves shot id to local storage) [x]
+- Enforce Airbnb or Github code style [x]
 
 ##Goals
 
