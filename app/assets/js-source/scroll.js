@@ -16,9 +16,14 @@ var infApp = infApp || {};
     var wHeight = Math.max( body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
+    var successCallback = function successCallback() {
+      infApp.lazyLoad.init();
+      infApp.scroll.callForMoreShots();
+    };
+
     // adding min offset to prevent double loading
     if (offset + iHeight === wHeight) {
-      infApp.ajax.get({ page: infApp.pageCount + 1 });
+      infApp.ajax.get({ page: infApp.pageCount + 1 }, successCallback);
 
       // remove listener to prevent adding the same shots twice
       document.removeEventListener('scroll', infApp.scroll.callForMoreShots, false);

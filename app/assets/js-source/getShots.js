@@ -61,6 +61,7 @@ var infApp = infApp || {};
       infApp.pageCount = (infApp.pageCount += 1) || 1;
       infApp.helpers.toggleClass('#main-preloader', 'hidden');
       infApp.helpers.toggleClass('#get-more-shots', 'hidden');
+
       document.addEventListener('scroll', infApp.scroll.callForMoreShots, false);
 
       if (callback && typeof callback === 'function') {
