@@ -2,15 +2,15 @@ var gulp        = require('gulp');
 var browserSync = require('browser-sync');
 var sass        = require('gulp-sass');
 var sourcemaps  = require('gulp-sourcemaps');
-var babel       = require('gulp-babel');
 var concat      = require('gulp-concat');
+var eslint      = require('gulp-eslint');
 var reload      = browserSync.reload;
 
 var src = {
     scss: 'app/assets/css/*.scss',
     css:  'app/assets/css',
     html: 'app/*.html',
-    es6:  'app/assets/es6/*.js',
+    jsSource:  'app/assets/js-source/*.js',
     js:   'app/assets/js/'
 };
 
@@ -22,7 +22,7 @@ gulp.task('serve', ['sass','js'], function() {
     });
 
     gulp.watch(src.scss, ['sass']);
-    gulp.watch(src.es6, ['js']);
+    gulp.watch(src.jsSource, ['js']);
     gulp.watch(src.html).on('change', reload);
 });
 
@@ -38,15 +38,24 @@ gulp.task('sass', function() {
 
 // Do js magic
 gulp.task('js', function() {
-    return gulp.src(src.es6)
+    return gulp.src(src.jsSource)
         .pipe(sourcemaps.init())
-        // .pipe(babel({
-        //     presets: ['es2015']
-        // }))
         .pipe(concat('scripts.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(src.js))
         .pipe(reload({stream: true}));
+});
+
+
+gulp.task('lint', function () {
+    return gulp.src([src.jsSource])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
+gulp.task('lint-watch', function() {
+    gulp.watch(src.jsSource, ['lint']);
 });
 
 gulp.task('default', ['serve']);

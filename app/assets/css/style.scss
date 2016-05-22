@@ -1,7 +1,7 @@
 // variables
 
 $screen-sm: 600px;
-$screen-md: 1024px;
+$screen-md: 840px;
 $screen-lg: 1280px;
 $screen-hd: 1440px;
 
@@ -120,12 +120,31 @@ figure {
   h2.shot-title {
     margin: 0;
     margin-bottom: 5px;
+
+    a {
+        color: white;
+        text-decoration: none;
+
+      &:hover, &:active, &:focus, &:visited {
+        text-decoration: none;
+        color: white;
+      }
+    }
   }
 
-  p.shot-author {
+  a.shot-author {
+    display: block;
     margin: 0;
     margin-top: 5px;
     font-style: italic;
+    color: white;
+    text-decoration: none;
+
+    &:hover, &:active, &:focus, &:visited {
+      text-decoration: none;
+      color: white;
+    }
+
   }
 
   hr {

@@ -3,12 +3,12 @@
 var infApp = infApp || {};
 
 
-(function() {
-  infApp.init = function() {
+(function run() {
+  infApp.init = function init() {
     var axajOptions = {
       page: 1
     };
-    var successCallback = function() {
+    var successCallback = function successCallback() {
       infApp.prepLazyLoading();
       infApp.addMoreShotsOnScroll();
     };
@@ -16,12 +16,11 @@ var infApp = infApp || {};
     infApp.getShots(axajOptions, successCallback);
   };
 
-  if (document.readyState != 'loading'){
+  // document.ready function
+  if (document.readyState !== 'loading') {
     infApp.init();
-
   } else {
     document.addEventListener('DOMContentLoaded', infApp.init());
-
   }
 }());
 

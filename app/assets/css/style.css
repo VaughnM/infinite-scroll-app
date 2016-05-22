@@ -58,7 +58,7 @@
   margin: -24px 0 0 -24px;
   top: 50%;
   left: 50%;
-  background-color: rgba(30, 30, 30, 0.7);
+  background-color: rgba(30, 30, 30, 0.3);
   animation-name: cssload-animation2;
   -o-animation-name: cssload-animation2;
   -ms-animation-name: cssload-animation2;
@@ -193,7 +193,7 @@ figure {
   overflow: hidden;
   min-height: 50px;
   width: calc(100% - 5px * 2); }
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-width: 840px) {
     .shot {
       width: calc(100% / 2 - 5px * 3); } }
   @media only screen and (min-width: 1280px) {
@@ -239,10 +239,22 @@ figure {
   .shot-overlay-text h2.shot-title {
     margin: 0;
     margin-bottom: 5px; }
-  .shot-overlay-text p.shot-author {
+    .shot-overlay-text h2.shot-title a {
+      color: white;
+      text-decoration: none; }
+      .shot-overlay-text h2.shot-title a:hover, .shot-overlay-text h2.shot-title a:active, .shot-overlay-text h2.shot-title a:focus, .shot-overlay-text h2.shot-title a:visited {
+        text-decoration: none;
+        color: white; }
+  .shot-overlay-text a.shot-author {
+    display: block;
     margin: 0;
     margin-top: 5px;
-    font-style: italic; }
+    font-style: italic;
+    color: white;
+    text-decoration: none; }
+    .shot-overlay-text a.shot-author:hover, .shot-overlay-text a.shot-author:active, .shot-overlay-text a.shot-author:focus, .shot-overlay-text a.shot-author:visited {
+      text-decoration: none;
+      color: white; }
   .shot-overlay-text hr {
     max-width: 120px;
     margin: auto; }
@@ -340,7 +352,7 @@ span.favourite-heart {
   margin: -24px 0 0 -24px;
   top: 50%;
   left: 50%;
-  background-color: rgba(30, 30, 30, 0.7);
+  background-color: rgba(30, 30, 30, 0.3);
   animation-name: cssload-animation2;
   -o-animation-name: cssload-animation2;
   -ms-animation-name: cssload-animation2;

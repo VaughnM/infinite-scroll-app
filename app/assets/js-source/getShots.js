@@ -2,12 +2,10 @@
 
 var infApp = infApp || {};
 
-(function(){
-
-  function getShots(options, successCallback, failureCallback){
+(function run() {
+  function getShots(options, successCallback, failureCallback) {
     var request = new XMLHttpRequest();
 
-    var options = options || {};
     var endPoint = options.endPoint || '/shots/';
     var page = options.page || '1';
     var perPage = options.perPage || '10';
@@ -21,17 +19,17 @@ var infApp = infApp || {};
                       '&access_token=' +
                       infApp.settings.api.access_token;
 
-    request.open('GET', requestUrl , true);
+    request.open('GET', requestUrl, true);
     toggleMainPreloader();
 
-    request.onload = function() {
+    request.onload = function onload() {
       var html = [];
       var htmlString;
 
       if (request.status >= 200 && request.status < 400) {
         infApp.shots = JSON.parse(request.responseText);
 
-        infApp.shots.forEach(function(item){
+        infApp.shots.forEach(function forEachLoop(item) {
           html.push(infApp.prepTemplate(item));
         });
 
@@ -46,23 +44,18 @@ var infApp = infApp || {};
         if (successCallback && typeof successCallback === 'function') {
           successCallback();
         }
-
-      } else {
-        console.error(request.responseText);
       }
     };
 
-    request.onerror = function() {
+    request.onerror = function onerror() {
       // There was a connection error of some sort
-      console.error("Something went wrong with API request");
-      if (errorCallback && typeof errorCallback === 'function') {
-        errorCallback();
+      if (failureCallback && typeof failureCallback === 'function') {
+        failureCallback();
       }
-
     };
 
     request.send();
-  };
+  }
 
   function toggleMainPreloader() {
     var element = document.getElementById('main-preloader');
@@ -70,7 +63,5 @@ var infApp = infApp || {};
     element.classList.toggle('hidden');
   }
 
-
   infApp.getShots = getShots;
-
 }());

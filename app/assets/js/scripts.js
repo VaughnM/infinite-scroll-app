@@ -2,7 +2,7 @@
 
 var infApp = infApp || {};
 
-(function () {
+(function run() {
   infApp.settings = {
     api: {
       baseUrl: 'https://api.dribbble.com/v1',
@@ -15,23 +15,24 @@ var infApp = infApp || {};
 
 var infApp = infApp || {};
 
-(function(){
-
+(function run() {
   // creating a HTML template using a json object
   function prepTemplate(shot) {
-    var t = "";
+    var t = '';
     var favourite = infApp.checkIfFavourite(shot.id) ? ' favourite' : '';
-    var pixelRation = window.devicePixelRatio;
+    // serving 2x images only when device pixel ration can handle them
     var imageUrl = window.devicePixelRatio > 1 && shot.images.hidpi
                     ? shot.images.hidpi
                     : shot.images.normal;
 
-    t += '<figure class="shot'+ favourite +'" id="' + shot.id + '">' +
-            '<figcaption class="shot-overlay">'+
+    t += '<figure class="shot' + favourite + '" id="' + shot.id + '">' +
+            '<figcaption class="shot-overlay">' +
               '<div class="shot-overlay-text">' +
-                '<h2 class="shot-title">' + shot.title + '</h2>' +
+                '<h2 class="shot-title">' +
+                  '<a href="' + shot.html_url + '" target="_blank">' + shot.title + '</a>' +
+                '</h2>' +
                 '<hr>' +
-                '<p class="shot-author">' + shot.user.name + '</p>' +
+                '<a class="shot-author" href="' + shot.user.html_url + '" target="_blank">' + shot.user.name + '</a>' +
                 '<span class="favourite-heart"></span>' +
               '</div>' +
               '<div class="shot-overlay-cta">' +
@@ -44,26 +45,21 @@ var infApp = infApp || {};
     return t;
   }
 
-  function prepAllHtml(jsonObj) {
-
-  }
-
   infApp.prepTemplate = prepTemplate;
-
 }());
+
 'use strict';
 
 var infApp = infApp || {};
 
-(function(){
-
+(function run() {
   function favouriteShot(shotId) {
     var storage = window.localStorage;
     var favourites = storage.getItem('favourites');
     var newArray = [];
 
-    if (! favourites) {
-      newArray.push(shotId)
+    if (!favourites) {
+      newArray.push(shotId);
       return storage.setItem('favourites', JSON.stringify(newArray));
     }
 
@@ -84,13 +80,13 @@ var infApp = infApp || {};
     var favouritesArr;
     var result = false;
 
-    if (! favourites) { return false; }
+    if (!favourites) { return false; }
 
     favouritesArr = JSON.parse(favourites);
 
-    favouritesArr.forEach(function(favouriteItem) {
+    favouritesArr.forEach(function forEachLoop(favouriteItem) {
       if (favouriteItem === shotId) {
-        return result = true;
+        result = true;
       }
     });
 
@@ -103,14 +99,10 @@ var infApp = infApp || {};
     var newArray = JSON.parse(favourites);
     var index = newArray.indexOf(shotId);
 
-    console.log(newArray)
-
     if (index > -1) {
       newArray.splice(index, 1);
       toggleFavouriteCssClass(shotId);
     }
-
-    console.log(newArray)
 
     return storage.setItem('favourites', JSON.stringify(newArray));
   }
@@ -123,18 +115,16 @@ var infApp = infApp || {};
 
   infApp.favouriteShot = favouriteShot;
   infApp.checkIfFavourite = checkIfFavourite;
-
 }());
+
 'use strict';
 
 var infApp = infApp || {};
 
-(function(){
-
-  function getShots(options, successCallback, failureCallback){
+(function run() {
+  function getShots(options, successCallback, failureCallback) {
     var request = new XMLHttpRequest();
 
-    var options = options || {};
     var endPoint = options.endPoint || '/shots/';
     var page = options.page || '1';
     var perPage = options.perPage || '10';
@@ -148,17 +138,17 @@ var infApp = infApp || {};
                       '&access_token=' +
                       infApp.settings.api.access_token;
 
-    request.open('GET', requestUrl , true);
+    request.open('GET', requestUrl, true);
     toggleMainPreloader();
 
-    request.onload = function() {
+    request.onload = function onload() {
       var html = [];
       var htmlString;
 
       if (request.status >= 200 && request.status < 400) {
         infApp.shots = JSON.parse(request.responseText);
 
-        infApp.shots.forEach(function(item){
+        infApp.shots.forEach(function forEachLoop(item) {
           html.push(infApp.prepTemplate(item));
         });
 
@@ -173,23 +163,18 @@ var infApp = infApp || {};
         if (successCallback && typeof successCallback === 'function') {
           successCallback();
         }
-
-      } else {
-        console.error(request.responseText);
       }
     };
 
-    request.onerror = function() {
+    request.onerror = function onerror() {
       // There was a connection error of some sort
-      console.error("Something went wrong with API request");
-      if (errorCallback && typeof errorCallback === 'function') {
-        errorCallback();
+      if (failureCallback && typeof failureCallback === 'function') {
+        failureCallback();
       }
-
     };
 
     request.send();
-  };
+  }
 
   function toggleMainPreloader() {
     var element = document.getElementById('main-preloader');
@@ -197,92 +182,87 @@ var infApp = infApp || {};
     element.classList.toggle('hidden');
   }
 
-
   infApp.getShots = getShots;
-
 }());
+
 'use strict';
 
 var infApp = infApp || {};
 
-(function(){
-
+(function run() {
   function prepLazyLoading() {
-    window.addEventListener("DOMContentLoaded", lazyLoadImages);
-    window.addEventListener("load", lazyLoadImages);
-    window.addEventListener("resize", lazyLoadImages);
-    window.addEventListener("scroll", lazyLoadImages);
+    window.addEventListener('DOMContentLoaded', lazyLoadImages);
+    window.addEventListener('load', lazyLoadImages);
+    window.addEventListener('resize', lazyLoadImages);
+    window.addEventListener('scroll', lazyLoadImages);
     lazyLoadImages();
   }
 
   function lazyLoadImages() {
-    var images = document.querySelectorAll("#shots-container img[data-src]"),
-        item;
+    var images = document.querySelectorAll('#shots-container img[data-src]');
 
-    [].forEach.call(images, function(image, index) {
+    [].forEach.call(images, function forEachLoop(image) {
       if (isElementInViewport(image)) {
-        // console.log('image ' + index + ' loading.. ');
-        image.setAttribute("src",image.getAttribute("data-src"));
-        image.removeAttribute("data-src");
+        image.setAttribute('src', image.getAttribute('data-src'));
+        image.removeAttribute('data-src');
       }
-    })
-  };
+    });
+  }
 
-  function isElementInViewport (el) {
+  function isElementInViewport(el) {
     var rect = el.getBoundingClientRect();
 
     return (
         rect.top >= 0 &&
         rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
   }
 
   infApp.prepLazyLoading = prepLazyLoading;
-
-
 }());
+
 'use strict';
 
 var infApp = infApp || {};
 
-(function(){
+(function run() {
   function addMoreShotsOnScroll() {
-    var body = document.body,
-        html = document.documentElement;
+    var body = document.body;
+    var html = document.documentElement;
 
     var offset = window.pageYOffset;
     var iHeight = window.innerHeight;
     var wHeight = Math.max( body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
-    // console.log('offset: ' + offset +/* ' iHeight: ' + iHeight +
-                // ' = ' + (offset + iHeight) +*/
-                // '\nheight: ' + wHeight);
-
     // adding min offset to prevent double loading
     if (offset + iHeight === wHeight) {
-      infApp.getShots({page:infApp.pageCount + 1});
+      infApp.getShots({ page: infApp.pageCount + 1 });
+
+      // remove listener to prevent adding the same shots twice
       document.removeEventListener('scroll', infApp.addMoreShotsOnScroll, false);
     }
-
-  };
+  }
 
   infApp.addMoreShotsOnScroll = addMoreShotsOnScroll;
+
+  // initial listener
   document.addEventListener('scroll', infApp.addMoreShotsOnScroll, false);
 }());
+
 'use strict';
 
 var infApp = infApp || {};
 
 
-(function() {
-  infApp.init = function() {
+(function run() {
+  infApp.init = function init() {
     var axajOptions = {
       page: 1
     };
-    var successCallback = function() {
+    var successCallback = function successCallback() {
       infApp.prepLazyLoading();
       infApp.addMoreShotsOnScroll();
     };
@@ -290,12 +270,11 @@ var infApp = infApp || {};
     infApp.getShots(axajOptions, successCallback);
   };
 
-  if (document.readyState != 'loading'){
+  // document.ready function
+  if (document.readyState !== 'loading') {
     infApp.init();
-
   } else {
     document.addEventListener('DOMContentLoaded', infApp.init());
-
   }
 }());
 
