@@ -33,11 +33,11 @@ var infApp = infApp || {};
     infApp.helpers.toggleClass('#get-more-shots', 'hidden');
 
     // define callbacks
-    request.addEventListener("load", function() {
+    request.addEventListener('load', function onLoad() {
       _success(request, successCallback);
     });
-    request.addEventListener("error", function() {
-      _error(request, erroCallback)
+    request.addEventListener('error', function onError() {
+      _error(request, failureCallback);
     });
 
     request.send();
