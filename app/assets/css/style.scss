@@ -6,7 +6,7 @@ $screen-lg: 1280px;
 $screen-hd: 1440px;
 
 body {
-  padding: 10px 5px;
+  padding: 10px;
   margin: 0;
   font-family: sans-serif;
   background: lightgrey;
@@ -37,30 +37,27 @@ figure {
 
 .shot {
   position: relative;
-  margin-bottom: 10px;
+  margin: 10px;
   align-self: center;
   border-radius: 4px;
   overflow: hidden;
 
   min-height: 50px;
 
-  width: calc(100% - 5px * 2);
+  width: 100%;
 
   @media only screen and (min-width: $screen-md) {
-    width: calc(100% / 2 - 5px * 3);
+    width: calc(100% / 2 - 20px);
   }
 
   @media only screen and (min-width: $screen-lg) {
-    width: calc(100% / 3 - 5px * 4);
+    width: calc(100% / 3 - 20px);
   }
 
   @media only screen and (min-width: $screen-hd) {
-    width: calc(100% / 4 - 5px * 5);
+    width: calc(100% / 4 - 20px);
   }
 
-  // @media only screen and (min-width: $screen-hd) {
-  //   width: calc(100% / 5 - 5px * 6);
-  // }
   .shot-overlay {
     opacity: 0;
     transition: all .2s ease-in;
@@ -106,7 +103,7 @@ figure {
   hr {
     margin: 0;
     padding: 0;
-    border: none;
+    border: 0;
     height: 1px;
     background-color: white;
   }
@@ -156,24 +153,23 @@ figure {
 .shot-overlay-cta {
   align-self: center;
   margin-bottom: 30px;
+}
 
-  button {
-    text-align: center;
-    cursor: pointer;
-    color: white;
-    background-color: transparent;
-    box-sizing: border-box;
-    border-radius: 20px;
-    border: medium medium;
-    height: 40px;
-    padding: 0 30px;
-    font-size: 16px;
-    line-height: 40px;
-    border: 1px solid rgba(255,255,255, .5);
+button {
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  background-color: transparent;
+  box-sizing: border-box;
+  border-radius: 20px;
+  height: 40px;
+  padding: 0 30px;
+  font-size: 16px;
+  line-height: 40px;
+  border: 1px solid rgba(255,255,255, .5);
 
-    &:active, &:focus {
-      outline: none;
-    }
+  &:active, &:focus {
+    outline: none;
   }
 }
 

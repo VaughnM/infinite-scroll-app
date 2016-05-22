@@ -14,6 +14,7 @@
     "eslint-config-airbnb-es5": "^1.0.9",
     "eslint-plugin-react": "^5.1.1",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^2.0.0",
     "gulp-sass": "^2.3.1",

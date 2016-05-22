@@ -1,10 +1,12 @@
-var gulp        = require('gulp');
-var browserSync = require('browser-sync');
-var sass        = require('gulp-sass');
-var sourcemaps  = require('gulp-sourcemaps');
-var concat      = require('gulp-concat');
-var eslint      = require('gulp-eslint');
-var reload      = browserSync.reload;
+var gulp         = require('gulp');
+var browserSync  = require('browser-sync');
+var sass         = require('gulp-sass');
+var sourcemaps   = require('gulp-sourcemaps');
+var concat       = require('gulp-concat');
+var eslint       = require('gulp-eslint');
+var autoprefixer = require('gulp-autoprefixer');
+
+var reload       = browserSync.reload;
 
 var src = {
     scss: 'app/assets/css/*.scss',
@@ -45,6 +47,9 @@ gulp.task('sass', function() {
     return gulp.src(src.scss)
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions']
+        }))
         .pipe(concat('style.css'))
         .pipe(gulp.dest(src.css))
         .pipe(reload({stream: true}));

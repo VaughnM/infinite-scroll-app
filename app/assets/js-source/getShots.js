@@ -29,6 +29,9 @@ var infApp = infApp || {};
     // hide preloader animation
     infApp.helpers.toggleClass('#main-preloader', 'hidden');
 
+    // hide add more shots button to prevent double loading
+    infApp.helpers.toggleClass('#get-more-shots', 'hidden');
+
     // define callbacks
     request.addEventListener("load", function() {
       _success(request, successCallback);
@@ -57,6 +60,7 @@ var infApp = infApp || {};
 
       infApp.pageCount = (infApp.pageCount += 1) || 1;
       infApp.helpers.toggleClass('#main-preloader', 'hidden');
+      infApp.helpers.toggleClass('#get-more-shots', 'hidden');
       document.addEventListener('scroll', infApp.scroll.callForMoreShots, false);
 
       if (callback && typeof callback === 'function') {
