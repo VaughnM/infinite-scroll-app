@@ -51,7 +51,7 @@ gulp.task('sass', function() {
 });
 
 // Do js magic
-gulp.task('js', ['lint'], function() {
+gulp.task('js', function() {
     return gulp.src(src.jsSource)
         .pipe(sourcemaps.init())
         .pipe(concat('scripts.js'))

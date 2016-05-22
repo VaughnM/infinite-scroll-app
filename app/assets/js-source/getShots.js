@@ -3,12 +3,17 @@
 var infApp = infApp || {};
 
 (function run() {
-  function getShots(options, successCallback, failureCallback) {
-    var request = new XMLHttpRequest();
+  infApp.ajax = {
+    get: get
+  };
 
-    var endPoint = options.endPoint || '/shots/';
-    var page = options.page || '1';
-    var perPage = options.perPage || '10';
+  function get(ajaxOptions, successCallback, failureCallback) {
+    var request  = new XMLHttpRequest();
+
+    var options    = ajaxOptions || {};
+    var endPoint   = options.endPoint || '/shots/';
+    var page       = options.page || '1';
+    var perPage    = options.perPage || '10';
 
     var requestUrl = infApp.settings.api.baseUrl +
                       endPoint +
@@ -20,48 +25,49 @@ var infApp = infApp || {};
                       infApp.settings.api.access_token;
 
     request.open('GET', requestUrl, true);
-    toggleMainPreloader();
 
-    request.onload = function onload() {
-      var html = [];
-      var htmlString;
+    // hide preloader animation
+    infApp.helpers.toggleClass('#main-preloader', 'hidden');
 
-      if (request.status >= 200 && request.status < 400) {
-        infApp.shots = JSON.parse(request.responseText);
-
-        infApp.shots.forEach(function forEachLoop(item) {
-          html.push(infApp.prepTemplate(item));
-        });
-
-        htmlString = html.join('');
-
-        document.getElementById('shots-container').innerHTML += htmlString;
-
-        infApp.pageCount = (infApp.pageCount += 1) || 1;
-        toggleMainPreloader();
-        document.addEventListener('scroll', infApp.addMoreShotsOnScroll, false);
-
-        if (successCallback && typeof successCallback === 'function') {
-          successCallback();
-        }
-      }
-    };
-
-    request.onerror = function onerror() {
-      // There was a connection error of some sort
-      if (failureCallback && typeof failureCallback === 'function') {
-        failureCallback();
-      }
-    };
+    // define callbacks
+    request.addEventListener("load", function() {
+      _success(request, successCallback);
+    });
+    request.addEventListener("error", function() {
+      _error(request, erroCallback)
+    });
 
     request.send();
   }
 
-  function toggleMainPreloader() {
-    var element = document.getElementById('main-preloader');
+  function _success(request, callback) {
+    var html = [];
+    var htmlString;
 
-    element.classList.toggle('hidden');
+    if (request.status >= 200 && request.status < 400) {
+      infApp.shots = JSON.parse(request.responseText);
+
+      infApp.shots.forEach(function forEachLoop(item) {
+        html.push(infApp.template.prepare(item));
+      });
+
+      htmlString = html.join('');
+
+      document.getElementById('shots-container').innerHTML += htmlString;
+
+      infApp.pageCount = (infApp.pageCount += 1) || 1;
+      infApp.helpers.toggleClass('#main-preloader', 'hidden');
+      document.addEventListener('scroll', infApp.scroll.callForMoreShots, false);
+
+      if (callback && typeof callback === 'function') {
+        callback();
+      }
+    }
   }
 
-  infApp.getShots = getShots;
+  function _error(request, callback) {
+    if (callback && typeof callback === 'function') {
+      callback();
+    }
+  }
 }());

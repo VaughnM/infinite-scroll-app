@@ -3,26 +3,30 @@
 var infApp = infApp || {};
 
 (function run() {
-  function prepLazyLoading() {
-    window.addEventListener('DOMContentLoaded', lazyLoadImages);
-    window.addEventListener('load', lazyLoadImages);
-    window.addEventListener('resize', lazyLoadImages);
-    window.addEventListener('scroll', lazyLoadImages);
-    lazyLoadImages();
+  infApp.lazyLoad = {
+    init: init
+  };
+
+  function init() {
+    window.addEventListener('DOMContentLoaded', _lazyLoad);
+    window.addEventListener('load', _lazyLoad);
+    window.addEventListener('resize', _lazyLoad);
+    window.addEventListener('scroll', _lazyLoad);
+    _lazyLoad();
   }
 
-  function lazyLoadImages() {
+  function _lazyLoad() {
     var images = document.querySelectorAll('#shots-container img[data-src]');
 
     [].forEach.call(images, function forEachLoop(image) {
-      if (isElementInViewport(image)) {
+      if (_isElementInViewport(image)) {
         image.setAttribute('src', image.getAttribute('data-src'));
         image.removeAttribute('data-src');
       }
     });
   }
 
-  function isElementInViewport(el) {
+  function _isElementInViewport(el) {
     var rect = el.getBoundingClientRect();
 
     return (
@@ -32,6 +36,4 @@ var infApp = infApp || {};
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
   }
-
-  infApp.prepLazyLoading = prepLazyLoading;
 }());
