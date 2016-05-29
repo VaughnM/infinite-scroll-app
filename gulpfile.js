@@ -8,6 +8,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var rename       = require('gulp-rename');
 var replace      = require('gulp-replace');
 var argv         = require('yargs').argv;
+var gutil        = require('gulp-util');
 
 var reload       = browserSync.reload;
 
@@ -83,10 +84,15 @@ gulp.task('init', function() {
     var oldString = "access_token: ''";
     var newString = "access_token: '" + argv.access_token + "'";
 
-    return gulp.src('app/assets/js-source/_settings.example')
+    gulp.src('app/assets/js-source/_settings.example')
         .pipe(replace(oldString, newString))
         .pipe(rename('_settings.js'))
         .pipe(gulp.dest('app/assets/js-source/'));
+
+    return gutil.log('API access_token added,',
+            'settings file initialized,',
+            'app ready to use\n',
+            gutil.colors.green('please run $ gulp serve'));
 });
 
 gulp.task('default', ['serve']);
